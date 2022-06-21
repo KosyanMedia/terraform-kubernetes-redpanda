@@ -1,0 +1,21 @@
+name: Terraform validation
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  validate:
+    runs-on: [self-hosted, Linux, X64]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - uses: hashicorp/setup-terraform@v1
+      - run: terraform init -backend=false
+      - run: terraform fmt -recursive -check
+        name: Lint
+      - run: terraform validate
+        name: Validate
