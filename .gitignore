@@ -1,5 +1,6 @@
 .idea
 .idea/*
+.testing/*
 
 .terraform.lock.hcl
    

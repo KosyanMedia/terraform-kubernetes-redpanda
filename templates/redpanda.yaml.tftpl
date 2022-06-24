@@ -1,0 +1,70 @@
+config_file: /etc/redpanda/redpanda.yaml
+redpanda:
+    data_directory: /var/lib/redpanda/data
+    node_id: 0
+    seed_servers:
+    %{ for idx in replicas }  
+        - host:
+            address: ${name}-${idx}.${name}.${namespace}.svc.cluster.local.
+            port: 33145
+    %{ endfor }
+    rpc_server:
+        address: 0.0.0.0
+        port: 33145
+    kafka_api:
+        - address: 0.0.0.0
+          port: 9092
+          name: kafka
+    admin:
+        - address: 0.0.0.0
+          port: 9644
+          name: admin
+    advertised_rpc_api:
+        address: 0.0.0.0
+        port: 33145
+    developer_mode: false
+    auto_create_topics_enabled: false
+    default_topic_replications: 3
+    id_allocator_replication: 3
+    log_segment_size: 536870912
+    transaction_coordinator_replication: 3
+rpk:
+    enable_usage_stats: false
+    tune_network: false
+    tune_disk_scheduler: false
+    tune_disk_nomerges: false
+    tune_disk_write_cache: false
+    tune_disk_irq: false
+    tune_fstrim: false
+    tune_cpu: false
+    tune_aio_events: false
+    tune_clocksource: false
+    tune_swappiness: false
+    tune_transparent_hugepages: false
+    enable_memory_locking: false
+    tune_coredump: false
+    coredump_dir: /var/lib/redpanda/coredump
+    tune_ballast_file: false
+    overprovisioned: false
+pandaproxy:
+    pandaproxy_api:
+        - address: 0.0.0.0
+          port: 8082
+          name: proxy
+pandaproxy_client:
+    brokers:
+    %{ for idx in replicas }
+        - address: ${name}-${idx}.${name}.${namespace}.svc.cluster.local.
+          port: 9092
+    %{ endfor }
+schema_registry:
+    schema_registry_api:
+        - address: 0.0.0.0
+          port: 8081
+          name: schema-registry
+schema_registry_client:
+    brokers:
+    %{ for idx in replicas }
+        - address: ${name}-${idx}.${name}.${namespace}.svc.cluster.local.
+          port: 9092
+    %{ endfor }
