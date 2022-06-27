@@ -6,7 +6,7 @@ redpanda:
     seed_servers:
     %{ for idx in replicas }  
         - host:
-            address: ${name}-${idx}.${name}.${namespace}.svc.cluster.local.
+            address: ${name}-${idx}.${name}-headless.${namespace}.svc.cluster.local.
             port: 33145
     %{ endfor }
     rpc_server:
@@ -58,7 +58,7 @@ pandaproxy:
 pandaproxy_client:
     brokers:
     %{ for idx in replicas }
-        - address: ${name}-${idx}.${name}.${namespace}.svc.cluster.local.
+        - address: ${name}-${idx}.${name}-headless.${namespace}.svc.cluster.local.
           port: 9092
     %{ endfor }
 schema_registry:
@@ -69,6 +69,6 @@ schema_registry:
 schema_registry_client:
     brokers:
     %{ for idx in replicas }
-        - address: ${name}-${idx}.${name}.${namespace}.svc.cluster.local.
+        - address: ${name}-${idx}.${name}-headless.${namespace}.svc.cluster.local.
           port: 9092
     %{ endfor }

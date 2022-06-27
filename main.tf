@@ -157,7 +157,7 @@ resource "kubernetes_stateful_set" "stateful_set" {
 
           env {
             name  = "SERVICE_FQDN"
-            value = "${var.name}.${var.namespace}.svc.cluster.local."
+            value = "${var.name}-headless.${var.namespace}.svc.cluster.local."
           }
 
           env {
