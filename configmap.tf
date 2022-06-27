@@ -9,6 +9,8 @@ resource "kubernetes_config_map" "configmap" {
       name      = var.name
       namespace = var.namespace
       replicas  = range(var.replicas)
+      region    = var.region
+      purpose   = var.purpose
     })
   }
 }

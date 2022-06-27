@@ -2,6 +2,7 @@ config_file: /etc/redpanda/redpanda.yaml
 redpanda:
     data_directory: /var/lib/redpanda/data
     node_id: 0
+    cluster_id: "${purpose}-${region}"
     seed_servers:
     %{ for idx in replicas }  
         - host:
@@ -23,11 +24,14 @@ redpanda:
         address: 0.0.0.0
         port: 33145
     developer_mode: false
-    auto_create_topics_enabled: false
-    default_topic_replications: 3
+    auto_create_topics_enabled: true
+    default_topic_replications: 2
+    default_topic_partitions: 16
     id_allocator_replication: 3
-    log_segment_size: 536870912
+    log_segment_size: 1048576000
+    delete_retention_ms: 172800000
     transaction_coordinator_replication: 3
+
 rpk:
     enable_usage_stats: false
     tune_network: false

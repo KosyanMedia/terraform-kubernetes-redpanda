@@ -82,3 +82,13 @@ variable "storage_class" {
   default     = "csi-gp2"
   description = "Storage class name"
 }
+
+variable "region" {
+  type        = string
+  description = "aws region"
+}
+
+variable "purpose" {
+  type        = string
+  description = "aws purpose"
+}
