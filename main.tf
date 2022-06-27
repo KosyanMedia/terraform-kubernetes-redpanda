@@ -143,6 +143,7 @@ resource "kubernetes_stateful_set" "stateful_set" {
           volume_mount {
             mount_path = "/var/lib/redpanda/data"
             name       = "datadir"
+            read_only  = false
           }
         }
         init_container {
@@ -225,6 +226,9 @@ resource "kubernetes_stateful_set" "stateful_set" {
             name         = "${var.name}-config"
           }
           name = "configmap-dir"
+        }
+        security_context {
+          fs_group = 101
         }
       }
     }
