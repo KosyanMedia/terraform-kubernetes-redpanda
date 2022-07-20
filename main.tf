@@ -16,7 +16,23 @@ resource "kubernetes_secret" "secret" {
       "kubernetes.io/service-account.name" = "${var.name}"
     }
   }
+}
 
+resource "kubernetes_pod_disruption_budget" "this" {
+  metadata {
+    name      = var.name
+    namespace = var.namespace
+    labels    = var.tags
+  }
+  spec {
+    selector {
+      match_labels = var.tags
+    }
+    max_unavailable = "1"
+  }
+  depends_on = [
+    kubernetes_stateful_set.stateful_set
+  ]
 }
 
 resource "kubernetes_stateful_set" "stateful_set" {

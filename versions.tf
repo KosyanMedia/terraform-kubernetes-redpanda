@@ -3,5 +3,6 @@ terraform {
 
   required_providers {
     kubernetes = ">= 1.10.0, < 3.0.0"
+    random = ">=3.2.0"
   }
 }
